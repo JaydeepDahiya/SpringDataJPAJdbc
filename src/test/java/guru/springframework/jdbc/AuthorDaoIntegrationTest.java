@@ -21,7 +21,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
  */
 @DataJpaTest
 @Import({AuthorDaoImpl.class, BookDaoImpl.class})
-public class AuthorDaoIntegrationTest {
+public abstract class AuthorDaoIntegrationTest {
 
     @Autowired
     AuthorDao authorDao;
