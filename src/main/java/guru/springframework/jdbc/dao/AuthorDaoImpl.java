@@ -90,7 +90,7 @@ public class AuthorDaoImpl implements AuthorDao {
 
             Statement statement = connection.createStatement();
 
-            resultSet = statement.executeQuery("SELECT LAST_INSERT_ID()");
+            resultSet = statement.executeQuery("SELECT LAST_INSERT_ID()"); // LAST_INSERT_ID() is mysql specific function
 
             if (resultSet.next()) {
                 Long savedId = resultSet.getLong(1);
