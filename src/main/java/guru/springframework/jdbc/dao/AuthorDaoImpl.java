@@ -83,21 +83,19 @@ public class AuthorDaoImpl implements AuthorDao {
 
         try {
             connection = source.getConnection();
-            ps = connection.prepareStatement("INSERT INTO author (first_name, last_name) values (?, ?)");
+            ps = connection.prepareStatement("INSERT INTO author (first_name, last_name) values (?, ?)"
+                    , Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, author.getFirstName());
             ps.setString(2, author.getLastName());
             ps.execute();
 
-            Statement statement = connection.createStatement();
-
-            resultSet = statement.executeQuery("SELECT LAST_INSERT_ID()");
-
+            // Retrieve the generated keys
+            resultSet = ps.getGeneratedKeys();
             if (resultSet.next()) {
-                Long savedId = resultSet.getLong(1);
+                Long savedId = resultSet.getLong(1); // Get the last inserted ID
                 return this.getById(savedId);
             }
 
-            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -107,7 +105,6 @@ public class AuthorDaoImpl implements AuthorDao {
                 e.printStackTrace();
             }
         }
-
         return null;
     }
 
