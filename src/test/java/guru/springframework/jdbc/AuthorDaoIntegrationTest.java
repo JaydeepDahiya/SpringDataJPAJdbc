@@ -3,6 +3,7 @@ package guru.springframework.jdbc;
 import guru.springframework.jdbc.dao.AuthorDao;
 import guru.springframework.jdbc.dao.AuthorDaoImpl;
 import guru.springframework.jdbc.domain.Author;
+import guru.springframework.jdbc.repositories.BookRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -15,14 +16,15 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 /**
  * Created by jt on 8/20/21.
  */
-@ActiveProfiles("local")
 @DataJpaTest
 @Import(AuthorDaoImpl.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class AuthorDaoIntegrationTest {
+public abstract class AuthorDaoIntegrationTest {
 
     @Autowired
     AuthorDao authorDao;
+
+    @Autowired
+    BookRepository bookRepository;
 
     @Test
     void testDeleteAuthor() {
@@ -78,4 +80,19 @@ public class AuthorDaoIntegrationTest {
         assertThat(author).isNotNull();
 
     }
+}
+
+class H2Test extends AuthorDaoIntegrationTest {
+}
+
+@ActiveProfiles("local")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+class MySQLIntegrationTest extends AuthorDaoIntegrationTest {
+
+    @Test
+    void testMySQL() {
+        long countBefore = bookRepository.count();
+        assertThat(countBefore).isGreaterThan(0);
+    }
+
 }
