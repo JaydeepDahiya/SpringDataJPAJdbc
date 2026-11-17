@@ -151,6 +151,8 @@ public abstract class AuthorDaoIntegrationTest {
     }
 }
 
+// added to enable the test-configured datasource to be used with P6Spy for SQL logs with bound values.
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class H2Test extends AuthorDaoIntegrationTest {
 }
 
