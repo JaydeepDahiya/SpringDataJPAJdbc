@@ -44,6 +44,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- for JDBC logging proxy - P6Spy -->
+        <dependency>
+            <groupId>p6spy</groupId>
+            <artifactId>p6spy</artifactId>
+            <version>3.9.1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
